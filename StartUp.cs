@@ -3,7 +3,7 @@ using System;
 
 namespace No_Mini_EA
 {
-    internal class StartUp
+    public  class StartUp
     {
         public void Auto_Start_Click(object sender, EventArgs e)
         {

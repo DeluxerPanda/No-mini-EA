@@ -6,9 +6,8 @@ namespace No_Mini_EA
 {
     public partial class Form1 : Form
     {
-        private NotifyIcon notifyIcon;
-        private StartUp startup = new StartUp();
-
+        private readonly NotifyIcon notifyIcon;
+        private readonly StartUp startup = new StartUp();
         public Form1()
         {
             InitializeComponent();
@@ -22,7 +21,6 @@ namespace No_Mini_EA
         }
 
 
-
         private void Exit_Click(object sender, EventArgs e)
         {Close();}
 
@@ -30,43 +28,40 @@ namespace No_Mini_EA
         {
              Hide();
              notifyIcon.Visible = true;
-            timer1.Start();
+            Timer1.Start();
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void Timer1_Tick(object sender, EventArgs e)
         {
-            Random random = new Random();
-            int randomNumber = random.Next(1, 101);
             Process[] processes = Process.GetProcessesByName("EADesktop");
-           // Console.WriteLine("TIMER WORKS 1 "+ randomNumber);
             foreach (Process process in processes)
             {
-              //  Console.WriteLine("TIMER WORKS 2 " + randomNumber);
                 if (string.IsNullOrEmpty(process.MainWindowTitle) && process.MainWindowHandle == IntPtr.Zero)
                   {
                     TimeSpan uptime = DateTime.Now - process.StartTime;
-                    int desiredUptimeInSeconds = 20;
-                 //   Console.WriteLine("TIMER WORKS 3 " + randomNumber);
+                    int desiredUptimeInSeconds = 11;
 
                     if (uptime.TotalSeconds >= desiredUptimeInSeconds)
-                    {
-                     //   Console.WriteLine("60 SECUND AND PROGRAM CLOSES");
-                        ProcessKill();
-                    }
+                    {ProcessKill();}
                 }
             }
         }
         private void ProcessKill()
         {
-            foreach (var processkill in Process.GetProcessesByName("EADesktop"))
+            Process[] processes = Process.GetProcessesByName("EADesktop");
+            foreach (Process process in processes)
             {
-                // MessageBox.Show("ehj");
-               var desc = FileVersionInfo.GetVersionInfo(processkill.MainModule.FileName);
-                Console.WriteLine(desc.FileDescription);
-             
-                  processkill.Kill();
+                try
+                {
+                    process.Kill();
+                 //   Console.WriteLine($"Terminated process: {process.ProcessName} (ID: {process.Id})");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error terminating process: {ex.Message}");
+                }
             }
-        }
-    }
+}
+}
 }
 
