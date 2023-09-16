@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Management;
 using System.Runtime.InteropServices;
 
 using System.Windows.Forms;
@@ -16,13 +17,11 @@ namespace No_Mini_EA
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool IsIconic(IntPtr hWnd);
-        private Timer processCheckTimer;
         private NotifyIcon notifyIcon;
 
         public Form1()
         {
             InitializeComponent();
-            InitializeProcessCheckTimer();
 
             WindowState = FormWindowState.Minimized;
             notifyIcon = new NotifyIcon();
@@ -31,6 +30,10 @@ namespace No_Mini_EA
             notifyIcon.ContextMenuStrip = new ContextMenuStrip();
             notifyIcon.ContextMenuStrip.Items.Add("Exit", null, Exit_Click);
             notifyIcon.ContextMenuStrip.Items.Add("Auto start", null, Auto_Start_Click);
+
+
+         
+         
         }
 
 
@@ -85,35 +88,32 @@ namespace No_Mini_EA
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Hide();
-            notifyIcon.Visible = true;
-            processCheckTimer.Start();
+             Hide();
+             notifyIcon.Visible = true;
+            timer1.Start();
         }
 
-        private void InitializeProcessCheckTimer()
+        private void timer1_Tick(object sender, EventArgs e)
         {
-            processCheckTimer = new Timer();
-            processCheckTimer.Interval = 11000; // Set the interval in milliseconds (e.g., 60 seconds).
-            processCheckTimer.Tick += ProcessCheckTimer_Tick;
-        }
-
-        private void ProcessCheckTimer_Tick(object sender, EventArgs e)
-        {
-            CheckAndKillEADesktop();
-        }
-
-        private void CheckAndKillEADesktop()
-        {
-
+            Random random = new Random();
+            int randomNumber = random.Next(1, 101);
             Process[] processes = Process.GetProcessesByName("EADesktop");
-
+            Console.WriteLine("TIMER WORKS 1 "+ randomNumber);
             foreach (Process process in processes)
             {
+                Console.WriteLine("TIMER WORKS 2 " + randomNumber);
                 if (string.IsNullOrEmpty(process.MainWindowTitle) && process.MainWindowHandle == IntPtr.Zero)
-                {
-                    process.Kill();
+                  {
+                    TimeSpan uptime = DateTime.Now - process.StartTime;
+                    int desiredUptimeInSeconds = 20;
+                    Console.WriteLine("TIMER WORKS 3 " + randomNumber);
+
+                    if (uptime.TotalSeconds >= desiredUptimeInSeconds)
+                    {
+                        Console.WriteLine("60 SECUND AND PROGRAM CLOSES");
+                        process.Kill();
+                    }
                 }
-                System.Threading.Thread.Sleep(11000);
             }
         }
     }
