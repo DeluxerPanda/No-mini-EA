@@ -68,6 +68,10 @@ namespace No_Mini_EA
                 {
                     processes[0].Kill();
                 }
+                else
+                {
+                    Console.WriteLine("Process not found.");
+                }
             }
             catch (Win32Exception ex)
             {
