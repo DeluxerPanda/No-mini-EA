@@ -61,15 +61,15 @@ namespace No_Mini_EA
         {
             try
             {
-                Process[] processes = Process.GetProcessesByName(processName);
 
-                if (processes.Length > 0)
+                Process[] processes = Process.GetProcessesByName(processName);
+                if (processes.Length == 1)
                 {
                     processes[0].Kill();
                 }
                 else
                 {
-                    Console.WriteLine("Process not found.");
+                   // MessageBox.Show("Process not found.");
                 }
             }
             catch (Win32Exception ex)
@@ -80,6 +80,5 @@ namespace No_Mini_EA
                 }
             }
         }   
-    }    
+    }
 }
-
