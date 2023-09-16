@@ -1,25 +1,28 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace No_Mini_EA
 {
     public partial class Form1 : Form
-    {
+    {   
         private readonly NotifyIcon notifyIcon;
         private readonly StartUp startup = new StartUp();
         private readonly String processName = "EADesktop";
+        // private readonly Image image_Exit = Image.FromFile("C:\\Users\\DeluxerPanda\\source\\repos\\DeluxPanda\\No_Mini_EA\\Images\\close-button-png-30235-Windows.ico");
+        //private readonly Image image_Auto_Start = Image.FromFile("C:\\Users\\DeluxerPanda\\source\\repos\\DeluxPanda\\No_Mini_EA\\Images\\windows-icon-42341-Windows.ico");
         public Form1()
         {
             InitializeComponent();
             WindowState = FormWindowState.Minimized;
-            notifyIcon = new NotifyIcon();
-            //   Image image = Image.FromFile("\\Images\\facebild.png");
-
-            notifyIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
-            notifyIcon.Text = "No Mini EA";
-            notifyIcon.ContextMenuStrip = new ContextMenuStrip();
+            notifyIcon = new NotifyIcon
+            {
+                Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath),
+                Text = "No Mini EA",
+                ContextMenuStrip = new ContextMenuStrip()
+            };
             notifyIcon.ContextMenuStrip.Items.Add("Auto start", null, startup.Auto_Start_Click);
             notifyIcon.ContextMenuStrip.Items.Add("Exit", null, Exit_Click);
             notifyIcon.MouseClick += NotifyIcon_MouseClick;

@@ -1,5 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Windows.Forms;
+using System.Drawing;
 
 namespace No_Mini_EA
 {
@@ -7,7 +9,7 @@ namespace No_Mini_EA
     {
         public void Auto_Start_Click(object sender, EventArgs e)
         {
-            string programName = "No_Mini_EA";
+            string  programName = "No_Mini_EA";
             if (IsProgramInCurrentUserStartup(programName))
             {
                 using (RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))

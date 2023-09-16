@@ -126,6 +126,10 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Images\close-button-png-30235-Windows.ico" />
+    <Content Include="Images\NoMiniEA-removebg-preview.ico" />
+    <Content Include="Images\windows-icon-42341-Windows.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
