@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace No_Mini_EA
@@ -77,7 +76,7 @@ namespace No_Mini_EA
             {
                 if (ex.NativeErrorCode != 0)
                 {
-                    MessageBox.Show("Error: " + ex.Message);
+                    Console.WriteLine("Error: " + ex.Message);
                 }
             }
         }   
